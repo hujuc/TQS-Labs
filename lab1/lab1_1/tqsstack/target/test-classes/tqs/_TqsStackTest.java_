@@ -1,0 +1,122 @@
+package tqs;
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.slf4j.Logger;
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.slf4j.LoggerFactory.getLogger;
+import java.util.NoSuchElementException;
+
+public class TqsStackTest {
+    static final Logger log = getLogger(lookup().lookupClass());
+    
+    TqsStack<Object> mySut;
+
+    @BeforeEach
+    public void init() {
+        mySut = new TqsStack<>();
+    }
+
+    // A stack is empty on construction
+    @Test
+    public void testEmptyStack() {
+        log.info("testEmptyStack");
+        assert(mySut.isEmpty());
+    }
+
+    // A stack has size 0 on construction
+    @Test
+    public void testStackSize() {
+        log.info("testStackSize");
+        assert(mySut.size() == 0);
+    }
+
+    // After n > 0 pushes to an empty stack, the stack is not empty and its size is n
+    @Test
+    public void testPush() {
+        log.info("testPush");
+        mySut.push(1);
+        mySut.push(2);
+        mySut.push(3);
+        assert(!mySut.isEmpty());
+        assert(mySut.size() == 3);
+    }
+
+    // If one pushes x then pops, the value popped is x
+    @Test
+    public void testPop() {
+        log.info("testPop");
+        mySut.push(1);
+        mySut.push(2);
+        mySut.push(3);
+        assert((Integer) mySut.pop() == 3);
+        assert((Integer) mySut.pop() == 2);
+        assert((Integer) mySut.pop() == 1);
+    }
+
+    // If one pushes x then peeks, the value returned is x but the size of the stack remains the same
+    @Test
+    public void testPeek() {
+        log.info("testPeek");
+        mySut.push(1);
+        mySut.push(2);
+        mySut.push(3);
+        assert((Integer) mySut.peek() == 3);
+        assert(mySut.size() == 3);
+    }
+
+    // If the size is n, then after n pops, the stack is empty and has a size 0
+    @Test
+    public void testPopEmpty() {
+        log.info("testPopEmpty");
+        mySut.push(1);
+        mySut.push(2);
+        mySut.push(3);
+        mySut.pop();
+        mySut.pop();
+        mySut.pop();
+        assert(mySut.isEmpty());
+        assert(mySut.size() == 0);
+    }
+
+    // Popping from an empty stack throws a NoSuchElementException
+    @Test
+    public void testPopEmptyException() {
+        log.info("testPopEmptyException");
+        try {
+            mySut.pop();
+            assert(false);
+        } catch (NoSuchElementException e) {
+            assert(true);
+        }
+    }
+
+    // Peeking into an empty stack throws a NoSuchElementException
+    @Test
+    public void testPeekEmptyException() {
+        log.info("testPeekEmptyException");
+        try {
+            mySut.peek();
+            assert(false);
+        } catch (NoSuchElementException e) {
+            assert(true);
+        }
+    }
+
+    // For bounded stacks only, pushing onto a full stack throws an IllegalStateException
+    @Test
+    public void testPushFullException() {
+        log.info("testPushFullException");
+        mySut = new TqsStack<>(2);
+        mySut.push(1);
+        mySut.push(2);
+        try {
+            mySut.push(3);
+            assert(false);
+        } catch (IllegalStateException e) {
+            assert(true);
+        }
+    }
+}
