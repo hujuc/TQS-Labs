@@ -57,14 +57,6 @@ public class CalculatorSteps {
         calc.push("-");
     }
 
-//    @Then("^the result is (\\d+)$")
-    @Then("the result is {double}")
-    public void the_result_is(double expected) {
-        Number value = calc.value();
-        log.debug("Result: {} (expected {})", value, expected);
-        assertEquals(expected, value);
-    }
-
     // multiply
     @When("I multiply {int} and {int}")
     public void multiply(int arg1, int arg2) {
@@ -74,12 +66,28 @@ public class CalculatorSteps {
         calc.push("*");
     }
 
+//    @Then("^the result is (\\d+)$")
+    @Then("the result is {double}")
+    public void the_result_is(double expected) {
+        Number value = calc.value();
+        log.debug("Result: {} (expected {})", value, expected);
+        assertEquals(expected, value);
+    }
+
+
     // invalid operation
     @When("I do an invalid operation")
     public void invalidOperation() {
         log.debug("Doing an invalid operation");
         calc.push("invalid");
-        assertEquals(null, calc.value());
     }
+
+    @Then("The result is null")
+    public void the_result_is_null() {
+        Number value = calc.value();
+        log.debug("Result: {}", value);
+        assertEquals(null, value);
+    }
+
 
 }

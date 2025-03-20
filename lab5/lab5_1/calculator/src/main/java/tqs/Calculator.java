@@ -29,6 +29,8 @@ public class Calculator {
             } else if (operator.equals("*")) {
                 value = arg1 * arg2;
             }
+        }else{
+            value = null;
         }
         return value;
     }
