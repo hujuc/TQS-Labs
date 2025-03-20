@@ -14,17 +14,19 @@
  * limitations under the License.
  *
  */
-package resources.tqs;
+package tqs;
 
+import static java.lang.System.getLogger;
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.slf4j.LoggerFactory.getLogger;
 
 import org.slf4j.Logger;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class CalculatorSteps {
 
@@ -37,7 +39,8 @@ public class CalculatorSteps {
         calc = new Calculator();
     }
 
-    @When("^I add (\\d+) and (\\d+)$")
+//    @When("^I add (\\d+) and (\\d+)$")
+    @When("I add {int} and {int}")
     public void add(int arg1, int arg2) {
         log.debug("Adding {} and {}", arg1, arg2);
         calc.push(arg1);
@@ -45,7 +48,8 @@ public class CalculatorSteps {
         calc.push("+");
     }
 
-    @When("^I substract (\\d+) to (\\d+)$")
+//    @When("^I substract (\\d+) to (\\d+)$")
+    @When("I substract {int} to {int}")
     public void substract(int arg1, int arg2) {
         log.debug("Substracting {} and {}", arg1, arg2);
         calc.push(arg1);
@@ -53,11 +57,29 @@ public class CalculatorSteps {
         calc.push("-");
     }
 
-    @Then("^the result is (\\d+)$")
+//    @Then("^the result is (\\d+)$")
+    @Then("the result is {double}")
     public void the_result_is(double expected) {
         Number value = calc.value();
         log.debug("Result: {} (expected {})", value, expected);
         assertEquals(expected, value);
+    }
+
+    // multiply
+    @When("I multiply {int} and {int}")
+    public void multiply(int arg1, int arg2) {
+        log.debug("Multiplying {} and {}", arg1, arg2);
+        calc.push(arg1);
+        calc.push(arg2);
+        calc.push("*");
+    }
+
+    // invalid operation
+    @When("I do an invalid operation")
+    public void invalidOperation() {
+        log.debug("Doing an invalid operation");
+        calc.push("invalid");
+        assertEquals(null, calc.value());
     }
 
 }
