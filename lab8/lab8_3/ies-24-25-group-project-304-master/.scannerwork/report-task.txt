@@ -1,0 +1,6 @@
+projectKey=homemaid
+serverUrl=http://localhost:9000
+serverVersion=25.4.0.105899
+dashboardUrl=http://localhost:9000/dashboard?id=homemaid
+ceTaskId=41b82572-7b46-431c-9f7e-cd7ec48147b9
+ceTaskUrl=http://localhost:9000/api/ce/task?id=41b82572-7b46-431c-9f7e-cd7ec48147b9
