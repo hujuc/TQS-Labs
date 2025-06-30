@@ -1,4 +1,4 @@
-# TQS_113889 – Software Testing and Quality
+# TQS_Labs – Software Testing and Quality
 
 This repository contains the work developed for the Software Testing and Quality (TQS) course at the University of Aveiro.
 
