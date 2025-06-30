@@ -74,7 +74,7 @@ docker run --name mysql-test \
 
 ## Author
 
-Hugo Castro
+Hugo Castro  
 Student No.: 113889  
 University of Aveiro  
 Course: Software Testing and Quality (TQS)
